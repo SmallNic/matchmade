@@ -1,0 +1,9 @@
+Welcome
+
+Please add a feed URL to get started. 
+
+<%= form_with(url: "/fetch_feed", method: "post") do %>
+  <%= label_tag(:q, "Search for:") %>
+  <%= text_field_tag(:q) %>
+  <%= submit_tag("Search") %>
+<% end %>
