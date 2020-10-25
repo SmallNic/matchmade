@@ -1,7 +1,9 @@
 Welcome
 
-Please add a feed URL to get started. 
+Review Items
+<button>
 
+Add feed
 <%= form_with(url: "/fetch_feed", method: "post") do %>
   <%= label_tag(:q, "Search for:") %>
   <%= text_field_tag(:q) %>
