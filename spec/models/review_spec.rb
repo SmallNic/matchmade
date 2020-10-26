@@ -7,5 +7,5 @@ RSpec.describe Review, type: :model do
   it { should belong_to(:user)}
   
   # Validation tests
-  it { should validate_presence_of(:is_interested) }
+  it { should validate_inclusion_of(:is_interested).in_array([true, false]) }
 end

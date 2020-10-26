@@ -1,0 +1,31 @@
+<div class="page-header">
+  <h1>Your Shared Matches</h1>
+</div>
+
+<% if @matches.count === 0 %>
+
+  <div class="page-description">
+    You do not have any matches yet. Review items and mark the ones you're interested in. 
+    Or add a feed URL below to get more items to review.
+  </div>
+
+  <%= form_with(url: "/fetch_feed", method: "post") do %>
+    <%= label_tag(:q, "Feed URL:") %>
+    <%= text_field_tag(:q) %>
+    <%= submit_tag("Submit") %>
+  <% end %>
+
+<% else %>
+  <div class="item-list">
+    <% @matches.each do |match| %>
+      <div class="item">
+        <h2><%= match.title %></h2> 
+        <p><%= match.description %></p>
+        <% if match.media_url %>
+          <a href="<%= match.media_url%>" target="_blank">Media URL</a>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+

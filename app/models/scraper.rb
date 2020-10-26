@@ -12,9 +12,9 @@ class Scraper
     doc = Nokogiri::XML(xml)
 
     item_name_prefix = doc.xpath('//channel/title').text
-    binding.pry
+
     item_list = doc.xpath('//channel/item').map do |i|
-      item = { category: 'Podcast' }
+      item = { category: 'Podcast' } # Only allowing NPR podcasts for proof of concept
       i.children.each do |child|
         if child.name === 'title'
           item[:title] = item_name_prefix + ' - ' + child.children[0].text
@@ -28,8 +28,7 @@ class Scraper
       end
       item
     end
-    
-    binding.pry
+
     return item_list
   end
 

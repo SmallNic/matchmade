@@ -7,13 +7,17 @@ class HomeController < ApplicationController
     feed_url = params[:q]
     feed_scraper = Scraper.new(feed_url)
     scraped_items = feed_scraper.scrape
-    binding.pry
     scraped_items.each do |item|
       if Item.find_by(title: item[:title]).nil?
         Item.create(item)
       end
     end
-    flash.notice = "Feed has been loaded."
+    redirect_to items_path
+  end
+
+  def matches
+    matchmaker = Matchmaker.new
+    @matches = matchmaker.find_matches
   end
 
 end

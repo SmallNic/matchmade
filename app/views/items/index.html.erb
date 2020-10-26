@@ -1,0 +1,50 @@
+<div class="page-header">
+  <h1>All Items</h1>
+</div>
+
+<% if @items.count === 0 %>
+
+  <div class="page-description">
+    You do not have any items to review yet. To get started a feed URL below.
+  </div>
+
+  <%= form_with(url: "/fetch_feed", method: "post") do %>
+    <%= label_tag(:q, "Feed URL:") %>
+    <%= text_field_tag(:q) %>
+    <%= submit_tag("Submit") %>
+  <% end %>
+
+<% else %>
+
+  <div class="item-list">
+    <% @items.each do |item| %>
+      <div class="item">
+        <h2><%= item.title %></h2> 
+        <p><%= item.description %></p>
+
+        <% user_item_review = item.review_by_user(current_user) %>
+
+        <em>Are you interested in listening to this?</em>
+
+        <% if !user_item_review.present?%>
+          <%= button_to reviews_path(is_interested: true, item_id: item.id), method: :post do %>
+            <i class="far fa-circle fa-3x"></i>
+          <% end %>
+        <% end %>
+
+        <% if user_item_review.present? && item.is_user_interested?(current_user)%>
+          <%= button_to [user_item_review], method: :put do %>
+            <i class="fas fa-dot-circle fa-3x"></i>
+          <% end %>
+        <% end %>
+
+        <% if user_item_review.present? && !item.is_user_interested?(current_user)%>
+          <%= button_to [user_item_review], method: :put do %>
+            <i class="far fa-circle fa-3x"></i>
+          <% end %>
+        <% end %>
+
+      </div>
+    <% end %>
+  </div>
+<% end %>

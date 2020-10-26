@@ -5,6 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :reviews, dependent: :destroy
-  validates_presence_of :name
+
+  def interests
+    item_ids = Review.where(user_id: self.id, is_interested: true).pluck(:item_id)
+    Item.where(id: item_ids)
+  end
 
 end

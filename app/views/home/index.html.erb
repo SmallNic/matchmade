@@ -1,11 +1,26 @@
-Welcome
+<div class="page-header">
+  <h1>Welcome to Matchmade</h1>
+  <h2><em>a tool that matches your entertainment interests with your friend's</em></h2>
+</div>
 
-Review Items
-<button>
+<div class="page-description">
+  <p>Matchmade was designed to tell you what podcasts, TV shows, or movies you and a friend are both interested in consuming.
+    This is a Proof of Concept, and currently only handles NPR podcast feeds.</p>
+</div>
 
-Add feed
-<%= form_with(url: "/fetch_feed", method: "post") do %>
-  <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:q) %>
-  <%= submit_tag("Search") %>
-<% end %>
+<h3>Getting Started</h3>
+<ol>
+  <li> Please enter in a feed URL below.</li>
+  <li> After submitting, review the list of podcast episodes and select the ones you're interested in listening to.</li>
+  <li> Share this site with your friend and have them select the episodes they're interested in.</li>
+  <li> Click on Show Matches above to see which episodes you're both interested in.</li>
+  <li> Plan a road trip and relax with a fully planned playlist.</li>
+</ol>
+
+<div class="">
+  <%= form_with(url: "/fetch_feed", method: "post") do %>
+    <%= label_tag(:q, "Feed URL:") %>
+    <%= text_field_tag(:q) %>
+    <%= submit_tag("Submit") %>
+  <% end %>
+</div>

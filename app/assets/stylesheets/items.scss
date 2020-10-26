@@ -1,0 +1,27 @@
+// Place all the styles related to the Items controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.item-list {
+  width: 100%;
+  padding: 0% 1%;
+
+  .item {
+    margin: 5% 0%;
+    padding: 0% 5%;
+  }
+
+  form {
+    display: inline-block;
+  }
+
+  button {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .fas.fa-dot-circle {
+    color: #0570f5;
+  }
+}
