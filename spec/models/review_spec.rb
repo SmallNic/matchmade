@@ -8,4 +8,6 @@ RSpec.describe Review, type: :model do
   
   # Validation tests
   it { should validate_inclusion_of(:is_interested).in_array([true, false]) }
+  it { should validate_uniqueness_of(:is_interested).scoped_to(:user_id, :item_id) }
+
 end

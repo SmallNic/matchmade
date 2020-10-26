@@ -1,13 +1,16 @@
+# Matchmaker is responsible for finding the items that two users are both "interested" in
+
 class Matchmaker
 
+  def initialize(user_one, user_two)
+    @user_one = user_one
+    @user_two = user_two
+  end
+
   def find_matches
-    user1 = User.find_by(email: "user1@example.com")
-    user1_interests = user1.interests
-
-    user2 = User.find_by(email: "user2@example.com")
-    user2_interests = user2.interests
-
-    shared_interest_ids = user1_interests.pluck(:id) & user2_interests.pluck(:id)
+    user_one_interests = @user_one.interests
+    user_two_interests = @user_two.interests
+    shared_interest_ids = user_one_interests.pluck(:id) & user_two_interests.pluck(:id)
     Item.where(id: shared_interest_ids)
   end
 

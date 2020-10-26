@@ -1,35 +1,40 @@
 require 'nokogiri'
 require 'open-uri'
 
+# Scraper is responsible for mapping an XML document to a list of items, such as podcast episodes or movies,
+# with desired attributes included
+
 class Scraper
 
-  def initialize(url)
+  def initialize(url, category)
     @url = url
+    @category = category
   end
 
   def scrape
     xml = open(@url)
     doc = Nokogiri::XML(xml)
+    scraped_items = []
 
-    item_name_prefix = doc.xpath('//channel/title').text
-
-    item_list = doc.xpath('//channel/item').map do |i|
-      item = { category: 'Podcast' } # Only allowing NPR podcasts for proof of concept
-      i.children.each do |child|
-        if child.name === 'title'
-          item[:title] = item_name_prefix + ' - ' + child.children[0].text
-        elsif child.name === 'description'
-          item[:description] = child.children[0].text
-        elsif child.name === 'pubDate'
-          item[:pub_date] = child.children[0].text
-        elsif child.name === 'content' && child.attributes["type"].value === 'audio/mpeg'
-          item[:media_url] = child.attributes["url"].value
-        end
-      end
-      item
+    case @category
+    when "NPR Podcast"
+      scraped_items = map_doc_to_podcast_episodes(doc)
+    else
+      puts "Not currently handling this type of Feed"
     end
 
-    return item_list
+    return scraped_items
+  end
+
+  def map_doc_to_podcast_episodes(doc)
+    channel_title = doc.xpath('//channel/title').text
+    podcast_episodes = doc.xpath('//channel/item').map do |doc_item|
+      podcast_episode = PodcastEpisode.new(channel_title, @category)
+      podcast_episode.populate_details(doc_item)
+      podcast_episode
+    end
+
+    return podcast_episodes
   end
 
 end

@@ -8,7 +8,7 @@ class ReviewsController < ApplicationController
         user_id: current_user.id,
         is_interested: review_params[:is_interested]
       )
-    rescue ActiveRecord::RecordNotSaved => e
+    rescue ActiveRecord::RecordNotSaved => error
       puts @review.errors.full_messages
     end
     redirect_to items_path

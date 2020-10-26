@@ -21,7 +21,7 @@
       <div class="item">
         <h2><%= match.title %></h2> 
         <p><%= match.description %></p>
-        <% if match.media_url %>
+        <% if match.media_url != "" %>
           <a href="<%= match.media_url%>" target="_blank">Media URL</a>
         <% end %>
       </div>
